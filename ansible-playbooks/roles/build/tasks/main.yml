@@ -2,6 +2,10 @@
 
 # build the images
 
+- name: Start squid-deb-proxy
+  service: name=squid-deb-proxy state=started
+  when: ansible_os_family == "Debian"
+
 - name: Build the images
   command: 'docker build -t="{{ docker_registry }}/{{ item }}" . chdir={{ images_path }}/{{ item }}'
   with_items:
