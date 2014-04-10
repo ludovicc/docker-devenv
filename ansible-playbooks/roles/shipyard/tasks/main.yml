@@ -1,0 +1,51 @@
+---
+
+#- name: Configure Docker to open its socket to local processes
+#  replace: "dest=/etc/default/docker regexp='^DOCKER_OPTS=\"-dns 8.8.8.8 -dns 8.8.4.4\"=' replace='DOCKER_OPTS=\"-dns 8.8.8.8 -dns 8.8.4.4 -H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock\"' owner=root group=root mode=0644"
+#  register: docker_config
+#- debug: msg="{{docker_config}}"
+#
+#- name: Restart Docker
+#  service: name=docker state=restarted
+#  when: docker_config|changed
+#################################
+
+- name: Pull latest Docker images for Shipyard
+  command: docker pull {{ item }}
+  with_items:
+    - shipyard/shipyard
+    - shipyard/deploy
+    - shipyard/redis
+    - shipyard/router
+    - shipyard/lb
+    - shipyard/db
+
+- name: Setup shipyard
+  command: docker run -i -t -v /var/run/docker.sock:/docker.sock shipyard/deploy setup
+
+- name: Wait for shipyard to start
+  command: sleep 10
+
+# setup agent
+#curl --silent https://github.com/shipyard/shipyard-agent/releases/download/$AGENT_VERSION/shipyard-agent -L -o /usr/local/bin/shipyard-agent
+#chmod +x /usr/local/bin/shipyard-agent
+
+#KEY=$(/usr/local/bin/shipyard-agent -url $SHIPYARD_URL -register 2>&1 | tail -1 | sed 's/.*Key: //g' | tr -d ' ')
+
+#echo "Using key $KEY from Shipyard..."
+
+# setup supervisor
+#apt-get install -y supervisor
+
+#cat << EOF > /etc/supervisor/conf.d/shipyard.conf
+#[program:shipyard-agent]
+#directory=/tmp
+#user=root
+#command=/usr/local/bin/shipyard-agent
+#    -url $SHIPYARD_URL
+#    -key $KEY
+#    autostart=true
+#    autorestart=true
+#EOF
+
+#supervisorctl update

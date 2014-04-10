@@ -1,0 +1,32 @@
+---
+
+# Setup the host environment on the master dev environment, the environment where Docker containers are built
+
+# see https://gist.github.com/dergachev/8441335
+- name: Instal squid-deb-proxy
+  apt: name=squid-deb-proxy state=present
+  when: ansible_os_family == "Debian"
+
+- name: Configure squid-deb-proxy to use port 18000
+  lineinfile: dest=/etc/squid-deb-proxy/squid-deb-proxy.conf regexp="^http_port \d+" line="http_port 18000" state=present
+
+- name: Start squid-deb-proxy
+  service: name=squid-deb-proxy state=started
+  when: ansible_os_family == "Debian"
+
+- name: Pull latest Docker image for the registry
+  command: docker pull registry
+
+- name: Instal supervisor
+  apt: name=supervisor state=present
+  when: ansible_os_family == "Debian"
+
+- name: Configure supervisor to start the Docker registry
+  copy: src=docker-registry.conf dest=/etc/supervisor/conf.d/docker-registry.conf
+
+- name: Alias internal_registry server to localhost
+  lineinfile: line="127.0.0.1      internal_registry" insertafter=EOF dest=/etc/hosts state=present
+
+- name: Restart supervisor
+  service: name=supervisor state=restarted
+

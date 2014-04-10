@@ -1,0 +1,7 @@
+---
+- name: Build a new version of the development environment
+  hosts: localhost
+  sudo: yes
+
+  roles:
+    - { role: build, when: "master" }

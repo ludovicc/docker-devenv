@@ -1,0 +1,10 @@
+---
+- name: Setup the development environment
+  hosts: localhost
+  sudo: yes
+
+  roles:
+    - docker
+#    - decking
+    - { role: master, when: "master" }
+#    - { role: watcher, when: "master is not defined" }

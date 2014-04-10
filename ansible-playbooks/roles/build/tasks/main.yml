@@ -1,0 +1,11 @@
+---
+
+# build the images
+
+- name: Build the images
+  command: 'docker build -t="{{ docker_registry }}/{{ item }}" . chdir={{ images_path }}/{{ item }}'
+  with_items:
+    - base
+
+#- name: Notify Flowdock that a new build has been done
+#  flowdock: xxx
