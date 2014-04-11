@@ -10,6 +10,9 @@
 - name: Configure squid-deb-proxy to use port 18000
   lineinfile: dest=/etc/squid-deb-proxy/squid-deb-proxy.conf regexp="^http_port \d+" line="http_port 18000" state=present
 
+- name: Whilelist some domains when apt-get is executed
+  copy: dest=/etc/squid-deb-proxy/mirror-dstdomain.acl.d/20-docker src=20-docker mode=0644
+
 - name: Start squid-deb-proxy
   service: name=squid-deb-proxy state=started
   when: ansible_os_family == "Debian"

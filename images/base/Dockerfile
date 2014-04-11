@@ -13,7 +13,7 @@ RUN apt-get update
 RUN apt-get upgrade -y
 
 # Install common packages (from http://youtu.be/1Fm3MJhQZZg)
-RUN apt-get install -y  aptitude sudo apt-utils ntp build-essential curl tzdata wget less dnsutils gzip tar netcat tmux unzip sysstat git python-software-properties vim zsh
+RUN apt-get install -y  aptitude sudo apt-utils ntp build-essential curl tzdata wget less dnsutils gzip tar netcat tmux unzip sysstat git python-software-properties vim zsh software-properties-common
 
 # set up timezone
 RUN echo 'Etc/UTC' > /etc/timezone
@@ -24,8 +24,3 @@ RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
-
-# create a developer user
-RUN useradd -m -p $(perl -e'print crypt("devpwd", "aa")') developer
-RUN adduser developer sudo
-USER developer

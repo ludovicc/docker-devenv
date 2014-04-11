@@ -10,6 +10,9 @@
   command: 'docker build -t="{{ docker_registry }}/{{ item }}" . chdir={{ images_path }}/{{ item }}'
   with_items:
     - base
+    - base-devuser
+    - oracle-java7
+    - oracle-java8
 
 #- name: Notify Flowdock that a new build has been done
 #  flowdock: xxx

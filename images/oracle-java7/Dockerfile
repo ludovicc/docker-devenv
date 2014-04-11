@@ -1,6 +1,7 @@
-FROM internal_registry:5000/base:latest
+FROM internal_registry:5000/base-devuser
 
-RUN add-apt-repository ppa:webupd8team/java
+USER root
+RUN add-apt-repository -y ppa:webupd8team/java
 RUN apt-get update
 
 # auto accept oracle jdk license
