@@ -8,25 +8,24 @@
 
 - name: Pull latest repositories
   command: docker pull {{ item }}
-  with_items:
-    - registry
-    - debian
-    - relateiq/zookeeper
-    - relateiq/kafka
+  with_items: external_docker_images
   tags: update
+
+- name: Prepare building the images
+  shell: '[ -x create.sh ] && ./create.sh chdir={{ images_path }}/{{ item }}'
+  with_items: docker_images
 
 - name: Build the images
   command: 'docker build -t="{{ docker_registry }}/{{ item }}" . chdir={{ images_path }}/{{ item }}'
-  with_items:
-    - base
-    - base-devuser
-    - base-appuser
-    - oracle-java7
-    - oracle-java8
-    - scala
-    - sbt
-    - playframework
-#    - riak-cs
+  with_items: docker_images
+
+- name: Push images to the registry
+  command: 'docker push "{{ docker_registry }}/{{ item }}" chdir={{ images_path }}/{{ item }}'
+  with_items: docker_images
+
+- name: Cleanup build area
+  file: path={{ images_path }}/{{ item }}/tmp state=absent
+  with_items: docker_images
 
 #- name: Notify Flowdock that a new build has been done
 #  flowdock: xxx
