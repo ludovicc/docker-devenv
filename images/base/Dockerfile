@@ -15,10 +15,10 @@ RUN apt-get install -y \
         aptitude \
         sudo \
         apt-utils \
-        ntp \
         build-essential \
         curl \
         tzdata \
+        ntp \
         wget \
         less \
         dnsutils \
@@ -28,10 +28,10 @@ RUN apt-get install -y \
         tmux \
         unzip \
         sysstat \
-        git \
-        python-software-properties \
         vim \
+        git \
         zsh \
+        python-software-properties \
         software-properties-common
 
 # set up timezone and locale

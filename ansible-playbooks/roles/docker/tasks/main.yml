@@ -19,6 +19,9 @@
   apt: name=lxc-docker state=present
   when: ansible_os_family == "Debian"
 
+- name: Setup default hosts
+  template: src=hosts.j2 dest=/etc/ansible/hosts
+
 # Further configuration after installation of Docker.
 # See http://docs.docker.io/en/latest/installation/ubuntulinux/
 
