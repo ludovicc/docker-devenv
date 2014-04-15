@@ -3,7 +3,7 @@
 # Setup the host environment on the master dev environment, the environment where Docker containers are built
 
 # see https://gist.github.com/dergachev/8441335
-- name: Instal squid-deb-proxy
+- name: Install squid-deb-proxy
   apt: name=squid-deb-proxy state=present
   when: ansible_os_family == "Debian"
 
@@ -20,7 +20,7 @@
 - name: Pull latest Docker image for the registry
   command: docker pull registry
 
-- name: Instal supervisor
+- name: Install supervisor
   apt: name=supervisor state=present
   when: ansible_os_family == "Debian"
 

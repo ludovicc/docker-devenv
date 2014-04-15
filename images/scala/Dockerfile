@@ -1,10 +1,7 @@
-FROM internal_registry:5000/oracle-java7
+FROM internal_registry:5000/oracle-java8
 
-ENV VERSION 2.10.3
+ENV SCALA_VERSION 2.10.4
 
-RUN wget http://www.scala-lang.org/files/archive/scala-$VERSION.deb
-
-RUN apt-get install -y -q libjansi-java
-
-RUN dpkg -i scala-$VERSION.deb
-
+RUN wget http://www.scala-lang.org/files/archive/scala-$SCALA_VERSION.deb && \
+    apt-get install -y -q libjansi-java && \
+    dpkg -i scala-$SCALA_VERSION.deb

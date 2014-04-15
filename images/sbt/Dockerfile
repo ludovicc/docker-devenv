@@ -1,7 +1,7 @@
-FROM internal_registry:5000/oracle-java7
+FROM internal_registry:5000/scala
 
-ENV VERSION 0.13.0
-RUN wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/$VERSION/sbt.deb
+ENV SBT_VERSION 0.13.1
 
 # Install the package...
-RUN dpkg -i sbt.deb
+RUN wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/$SBT_VERSION/sbt.deb && \
+    dpkg -i sbt.deb

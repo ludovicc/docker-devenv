@@ -6,13 +6,27 @@
   service: name=squid-deb-proxy state=started
   when: ansible_os_family == "Debian"
 
+- name: Pull latest repositories
+  command: docker pull {{ item }}
+  with_items:
+    - registry
+    - debian
+    - relateiq/zookeeper
+    - relateiq/kafka
+  tags: update
+
 - name: Build the images
   command: 'docker build -t="{{ docker_registry }}/{{ item }}" . chdir={{ images_path }}/{{ item }}'
   with_items:
     - base
     - base-devuser
+    - base-appuser
     - oracle-java7
     - oracle-java8
+    - scala
+    - sbt
+    - playframework
+#    - riak-cs
 
 #- name: Notify Flowdock that a new build has been done
 #  flowdock: xxx

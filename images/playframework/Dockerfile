@@ -1,6 +1,6 @@
-FROM internal_registry:5000/oracle-java7
+FROM internal_registry:5000/sbt
 
-ENV VERSION 2.2.1
+ENV VERSION 2.2.2
 
 RUN wget http://downloads.typesafe.com/play/$VERSION/play-$VERSION.zip 
 
