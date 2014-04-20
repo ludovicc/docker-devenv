@@ -1,7 +1,7 @@
 # Base image
 FROM ubuntu:13.10
 MAINTAINER Ludovic Claude <ludovic.claude@laposte.net>
-ENV REFRESHED_AT 2014-04-15
+ENV REFRESHED_AT 2014-04-20
 
 # assumes your docker HOST ran "apt-get install -y squid-deb-proxy"
 RUN /sbin/ip route | awk '/default/ { print "Acquire::http::Proxy \"http://"$3":18000\";" }' > /etc/apt/apt.conf.d/30proxy

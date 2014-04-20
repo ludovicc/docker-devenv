@@ -20,11 +20,14 @@
 - name: Pull latest Docker image for the registry
   command: docker pull registry
 
+- name: Start the registry
+  command: docker run --name internal_registry -d -p 5000:5000 registry
+
 - name: Install supervisor
   apt: name=supervisor state=present
   when: ansible_os_family == "Debian"
 
-- name: Configure supervisor to start the Docker registry
+- name: Configure supervisor to start the Docker registry automatically
   copy: src=docker-registry.conf dest=/etc/supervisor/conf.d/docker-registry.conf
 
 - name: Alias internal_registry server to localhost

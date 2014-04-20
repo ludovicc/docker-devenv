@@ -2,16 +2,18 @@
 
 external_docker_images:
   - registry
-  - debian
+  - busybox
+  - ubuntu
   - relateiq/zookeeper
   - relateiq/kafka
 
 docker_images:
-  - base
-  - base-devuser
-  - base-appuser
-  - oracle-java7
-  - oracle-java8
+#  - base
+#  - base-devuser
+#  - base-appuser
+#  - oracle-java7
+#  - oracle-java8
+  - jars-cache
   - scala
   - sbt
   - playframework

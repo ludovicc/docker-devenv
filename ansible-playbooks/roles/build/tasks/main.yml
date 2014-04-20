@@ -1,6 +1,6 @@
 ---
 
-# build the images
+# Build the images
 
 - name: Start squid-deb-proxy
   service: name=squid-deb-proxy state=started
@@ -12,11 +12,15 @@
   tags: update
 
 - name: Prepare building the images
-  shell: '[ -x create.sh ] && ./create.sh chdir={{ images_path }}/{{ item }}'
+  action: >
+    shell [ -x create.sh ] && ./create.sh || true
+    chdir={{ images_path }}/{{ item }}
   with_items: docker_images
 
 - name: Build the images
-  command: 'docker build -t="{{ docker_registry }}/{{ item }}" . chdir={{ images_path }}/{{ item }}'
+  action: >
+    shell docker build -t="{{ docker_registry }}/{{ item }}" . && ( [ -x post-create.sh ] && ./post-create.sh || true )
+    chdir={{ images_path }}/{{ item }}
   with_items: docker_images
 
 - name: Push images to the registry
