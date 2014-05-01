@@ -1,0 +1,4 @@
+#!/bin/sh
+echo You need to type Ctrl+p Ctrl+q Ctrl+c to exit the process
+sleep 1
+sudo docker attach scala-proc 2>/dev/null || sudo docker run --name scala-proc -i -t --rm internal_registry:5000/scala

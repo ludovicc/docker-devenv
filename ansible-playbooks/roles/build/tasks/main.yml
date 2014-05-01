@@ -19,7 +19,7 @@
 
 - name: Build the images
   action: >
-    shell docker build -t="{{ docker_registry }}/{{ item }}" . && ( [ -x post-create.sh ] && ./post-create.sh || true )
+    shell docker build {{ docker_build_opts }} --rm -t="{{ docker_registry }}/{{ item }}" . && ( [ -x post-create.sh ] && ./post-create.sh || true )
     chdir={{ images_path }}/{{ item }}
   with_items: docker_images
 

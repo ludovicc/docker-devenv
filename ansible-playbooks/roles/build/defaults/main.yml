@@ -1,3 +1,4 @@
 ---
 docker_registry: "internal_registry:5000"
 images_path: "../images"
+docker_build_opts:
