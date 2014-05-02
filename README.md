@@ -1,10 +1,12 @@
 # Docker Development Environment
 
-This is a one stop Vagrant for a docker based development environment.  It comes with riak-cs, scala, zookeeper, kafka, oracle-java7, playframework, and sbt, and probably a bunch more.  It will pull and set up images for absolutely everything.
+This is a one stop docker based development environment.  It comes with riak-cs, scala, zookeeper, kafka, oracle-java7, playframework, and sbt, and probably a bunch more.  It will pull and set up images for absolutely everything.
 
 ## Caution
 
 This is personalized for my use.  It's not guaranteed to work all the time. 
+
+Vagrant support is disabled in this fork, I'm waiting that 1.6 is out with native Docker support.
 
 I recommend you clone your own copy:
 
@@ -23,23 +25,30 @@ It also depends on a public registry image for the docker registry, so that's po
 
 ## Installation
 
-### Install Virtualbox and Vagrant, etc.
+### Install Ansible
 
-Read the [Docker Cheat Sheet](https://gist.github.com/wsargent/7049221) for how to install Vagrant.
+On Ubuntu:
 
-### Run Vagrant 
+    sudo apt-get install -y python-setuptools python-yaml python-jinja2 python-paramiko python-keyczar
+    sudo easy_install pip
+    sudo pip install ansible
+    
+### Install Docker, squid-deb-proxy, supervisor and configure then.
 
-```
-vagrant up
-```
+    bin/setup.sh
 
-Be prepared to wait while it gets Docker and Shipyard installed.
 
-Reboot to install the Guest Additions:
+### Build the Docker images
+ 
+    bin/install.sh
+    
+### Run the images
 
-```
-vagrant reload
-```
+    images/scala/run
+
+----
+
+## Warning - devenv scripts not supported yet in this fork
 
 ### Run devenv install
 
@@ -54,14 +63,6 @@ Once this is done, reboot the VM to have Docker pick up the changes needed for S
 ```
 vagrant reload
 ```
-
-### Configure Shipyard
-
-Once the server has rebooted and you've waited for a bit, you should have Shipyard up.  The credentials are "shipyard/admin".
-
-* Go to [http://localhost:8005/hosts/](http://localhost:8005/hosts/) to see Shipyard's hosts.
-* In the vagrant VM, `ifconfig eth0` and look for "inet addr:10.0.2.15" -- enter the IP address.
-* Check [http://localhost:8005/images/](http://localhost:8005/images/) to verify the new images are there.
 
 ## Usage
 
