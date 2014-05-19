@@ -40,4 +40,4 @@ do
 done
 
 cd $DIR/../ansible-playbooks
-ansible-playbook -K $OPTS build.yml
+ansible-playbook -vvvv -K $OPTS build.yml

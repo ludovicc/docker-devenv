@@ -6,12 +6,12 @@ ENV REFRESHED_AT 2014-04-24
 # assumes your docker HOST ran "apt-get install -y squid-deb-proxy"
 RUN /sbin/ip route | awk '/default/ { print "Acquire::http::Proxy \"http://"$3":18000\";" }' > /etc/apt/apt.conf.d/30proxy
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list.d/ubuntu-universe && \
+RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list.d/ubuntu-universe.list && \
     apt-get update && \
     apt-get upgrade -y
 
 # Install common packages (from http://youtu.be/1Fm3MJhQZZg)
-RUN apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
         aptitude \
         sudo \
         apt-utils \
@@ -23,14 +23,18 @@ RUN apt-get install -y \
         less \
         dnsutils \
         gzip \
+        bzip2 \
         tar \
         netcat \
         tmux \
+        byobu \
         unzip \
         sysstat \
         vim \
         git \
         zsh \
+        fish \
+        ruby \
         python-software-properties \
         software-properties-common
 

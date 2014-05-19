@@ -17,4 +17,8 @@ docker_images:
   - scala
   - sbt
   - playframework
+  - android
+  - cordova
+  - ionic
+  - nodejs
 #  - riak-cs
