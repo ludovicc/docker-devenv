@@ -18,7 +18,7 @@
   when: ansible_os_family == "Debian"
 
 - name: Pull latest Docker image for the registry
-  command: docker pull registry
+  command: docker pull registry:latest
 
 - name: Start the registry
   command: docker run --name internal_registry -d -p 5000:5000 registry

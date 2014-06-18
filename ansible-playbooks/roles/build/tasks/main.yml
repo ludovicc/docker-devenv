@@ -7,7 +7,7 @@
   when: ansible_os_family == "Debian"
 
 - name: Pull latest repositories
-  command: docker pull {{ item }}
+  command: "docker pull {{ item.name }}:{{ item.version }}"
   with_items: external_docker_images
   tags: update
 

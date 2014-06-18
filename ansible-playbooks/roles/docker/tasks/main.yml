@@ -19,6 +19,9 @@
   apt: name=lxc-docker state=present
   when: ansible_os_family == "Debian"
 
+- name: Define Ansible configuration directory
+  file: path=/etc/ansible state=directory owner=root mode=0744
+
 - name: Setup default hosts
   template: src=hosts.j2 dest=/etc/ansible/hosts
 
@@ -27,21 +30,19 @@
 
 # TODO: need Ansible 1.6
 
-#- name: Configure Linux kernel to support memory and swap accounting
-#  replace: dest=/etc/default/grub regexp='^GRUB_CMDLINE_LINUX=""' replace='GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"' backup=yes owner=root group=root mode=0644
-#  register: grub_file
-#  when: ansible_os_family == "Debian"
+- name: Configure Linux kernel to support memory and swap accounting
+  replace: dest=/etc/default/grub regexp='^GRUB_CMDLINE_LINUX=""$' replace='GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"' backup=yes owner=root group=root mode=0644
+  register: grub_file
+  when: ansible_os_family == "Debian"
 
-#- name: Update Grub if necessary
-#  command: update-grub
-#  when: ansible_os_family == "Debian" and grub_file|changed
+- name: Update Grub if necessary
+  command: update-grub
+  when: ansible_os_family == "Debian" and grub_file|changed
 
-#- name: Configure Docker to use a well known DNS server
-#  replace: "dest=/etc/default/docker regexp='^#DOCKER_OPTS=' replace='DOCKER_OPTS=\"-dns 8.8.8.8 -dns 8.8.4.4\"' owner=root group=root mode=0644"
-#  register: docker_config
+- name: Configure Docker to use a well known DNS server
+  replace: "dest=/etc/default/docker regexp='^#DOCKER_OPTS=.*$' replace='DOCKER_OPTS=\"-dns 8.8.8.8 -dns 8.8.4.4\"' owner=root group=root mode=0644"
+  register: docker_config
 
-#- debug: msg="{{docker_config}}"
-#
-#- name: Restart Docker
-#  service: name=docker state=restarted
-#  when: docker_config|changed
+- name: Restart Docker
+  service: name=docker state=restarted
+  when: docker_config|changed

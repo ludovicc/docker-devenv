@@ -1,7 +1,7 @@
 FROM internal_registry:5000/scala
 
 USER root
-ENV SBT_VERSION 0.13.1
+ENV SBT_VERSION 0.13.5
 
 # Install the package...
 RUN wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/$SBT_VERSION/sbt.deb && \

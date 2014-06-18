@@ -6,6 +6,12 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OPTS="-e master=true"
 
+curl http://localhost:5000/_ping 2>&1 >/dev/null || (
+    echo "Local Docker registry cannot be reached."
+    echo "Have you run ./setup.sh ?"
+    exit 1
+)
+
 while :
 do
     case $1 in
@@ -40,4 +46,4 @@ do
 done
 
 cd $DIR/../ansible-playbooks
-ansible-playbook -vvvv -K $OPTS build.yml
+ansible-playbook -vvvv -K -i hosts $OPTS build.yml

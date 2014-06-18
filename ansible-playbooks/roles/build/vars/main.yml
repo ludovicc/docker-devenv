@@ -1,12 +1,5 @@
 ---
 
-external_docker_images:
-  - registry
-  - busybox
-  - ubuntu
-  - relateiq/zookeeper
-  - relateiq/kafka
-
 docker_images:
   - base
   - base-devuser
