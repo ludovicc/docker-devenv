@@ -6,7 +6,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OPTS="-e master=true"
 
-curl http://localhost:5000/_ping 2>&1 >/dev/null || (
+curl --silent http://localhost:5000/_ping 2>&1 >/dev/null || (
     echo "Local Docker registry cannot be reached."
     echo "Have you run ./setup.sh ?"
     exit 1
@@ -17,7 +17,7 @@ do
     case $1 in
         -h | --help | -\?)
             #  Call your Help() or usage() function here.
-            echo "Usage: ./install.sh [--clean] [--no-update]"
+            echo "Usage: ./install.sh [--clean] [--no-update] [comma separated list of images to build]"
             echo "Options:"
             echo "  -c or --clean or --no-cache : do not use Docker cache when building, this will refresh everything"
             echo "  -N or --no-update : skip updating the Docker images from Internet"
@@ -40,6 +40,8 @@ do
             shift
             ;;
         *)  # no more options. Stop while loop
+            # Assuming that the parameter is a list of images to build
+            OPTS="$OPTS -e docker_images=$1"
             break
             ;;
     esac

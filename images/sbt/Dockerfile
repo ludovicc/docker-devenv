@@ -4,7 +4,7 @@ USER root
 ENV SBT_VERSION 0.13.5
 
 # Install the package...
-RUN wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/$SBT_VERSION/sbt.deb && \
+RUN wget -O sbt.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
     dpkg -i sbt.deb && \
     rm sbt.deb
 

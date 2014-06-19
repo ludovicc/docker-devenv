@@ -4,12 +4,13 @@ docker_images:
   - base
   - base-devuser
   - base-appuser
-  - oracle-java7
-  - oracle-java8
+# FIXME - build failing - oracle-java7
+# FIXME - build failing - oracle-java8
+  - java7
   - jars-cache
   - scala
   - sbt
-  - playframework
+  - activator
   - android
   - cordova
   - ionic

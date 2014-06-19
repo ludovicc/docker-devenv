@@ -10,8 +10,7 @@ RUN useradd -m -p $(perl -e'print crypt("devpwd", "aa")') developer && \
     adduser developer sudo
 
 ADD .inputrc /home/developer/.inputrc 
-RUN mkdir -p /home/developer/Projects /home/developer/.teamocil && \
-    git clone https://github.com/revans/bash-it.git /home/developer/.bash_it
+RUN git clone https://github.com/revans/bash-it.git /home/developer/.bash_it
     chown -R developer:developer /home/developer
 EXPORT HOME /home/developer
 EXPORT WORK_DIR /home/developer/Projects

@@ -5,8 +5,6 @@ images_path: "../images"
 docker_build_opts:
 
 external_docker_images:
-  - { name: registry, version: latest }
   - { name: busybox, version: latest }
-  - { name: ubuntu, version: 14.04 }
-  - { name: relateiq/zookeeper, version: latest }
-  - { name: relateiq/kafka, version: latest }
+#  - { name: relateiq/zookeeper, version: latest }
+#  - { name: relateiq/kafka, version: latest }
